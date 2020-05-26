@@ -2,7 +2,7 @@ const fetchPokemon = () => {
 
 
     const promises = [];
-    for (let i = 387; i < 494; i++) {
+    for (let i = 1; i < 800; i++) {
         const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         promises.push(fetch(url).then((res) => res.json()));
         
@@ -88,9 +88,17 @@ const searchFunction = () => {
 document.addEventListener('click', (e) => {
     if((e.target == searchButton) ) {
         searchFunction();
-    } else {
-        console.log(e.target.parentElement);
-    }
+    } else if(e.target.parentElement.className == 'card-link'
+            || e.target.parentElement.className == 'card'
+            || e.target.parentElement.className == 'card-image'
+            || e.target.parentElement.className == 'card__text-container'
+            || e.target.parentElement.className == 'card-title'
+            || e.target.parentElement.className == 'card-subtitle'
+    ) {
+        let passedElement = event.target.closest('li').children[1].children[0].textContent;
+        //console.log(passedElement);
+        getFullPokeProperties(passedElement);
+    } 
     
 });
     
@@ -139,12 +147,17 @@ resetButton.addEventListener('click', () => {
 
 
 //click and display a pokemon in the middle
+const iChooseYou = document.querySelectorAll('.card-link');
 
 
-const middleStep = (e) => {
- console.log(e.target);
+var getFullPokeProperties = (element) => {
+    let pokeName = element.replace(/[0-9]/g, '').substring(2);
+    let fullDex = state.AllPokéProperties;
+    
+    //Search the full database for the matching pokemon
+    const match = fullDex.filter(mon => {
+        return mon.name.includes(`${pokeName.toString()}`);
+    })
+    console.log(match);
 }
 
-const iChooseYou = document.querySelectorAll('.card-link')
-
-console.log(iChooseYou);
