@@ -1,28 +1,28 @@
-const fetchPokemon = () => {
+
+import * as Search from './dataModels/Search';
+
+import axios from 'axios';
 
 
-    const promises = [];
-    for (let i = 1; i < 800; i++) {
-        const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        promises.push(fetch(url).then((res) => res.json()));
-        
-    }
-    //promise. runs all promises, then lets us have the array of all promises afer they are done
-    Promise.all(promises).then((results) => {
-        //console.log(results);
-        state.AllPokéProperties = results;
-        const pokemon = results.map((data) => ({
-            name: data.name,
-            id: data.id,
-            image: data.sprites.front_default,
-            type: data.types.map( type => type.type.name).join(', ')
-        }));
-        state.pokemon = pokemon;
-        displayPokemon(pokemon);
-        //console.log(state);
-    });
-};
 
+//Search controller
+const pokeSearch = () => {
+    //when somebody calls the search function, what happens?
+
+    //get the search value
+
+    //Call the api, and get the data back
+
+    //display the values on the screen
+}
+
+
+
+
+
+
+
+//global state
 const state = {
     AllPokéProperties: '',
     pokemon: '',
@@ -52,7 +52,7 @@ const displayPokemon = (pokemon) => {
     pokedex.innerHTML = markup;
 };
 
-fetchPokemon();
+
 
 let card = document.querySelector('.card');
 
@@ -161,3 +161,20 @@ var getFullPokeProperties = (element) => {
     console.log(match);
 }
 
+
+
+//when the page loads, load the pokemon first
+
+
+const init = async () => {
+
+    let pokeProperties = await Search.fetchPokemon();
+    state.AllPokéProperties = pokeProperties.allPokemon;
+    state.pokemon = pokeProperties.pokemon;
+    console.log(state);
+    displayPokemon(state.pokemon);
+
+    //implement caching for the api
+    
+}
+init();
